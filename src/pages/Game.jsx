@@ -34,11 +34,6 @@ const Game= () => {
 
     const [ loading, setLoading ]= useState(true)
 
-    // useEffect(() => {
-    //     checkWin()
-    //     checkTie()
-    // }, [board])
-
     useEffect(() => {
         const gamesfunc= async () => {
             try {
@@ -49,8 +44,6 @@ const Game= () => {
             }
         }
         gamesfunc()
-
-        
     }, [])
 
     const [player, setPlayer ]= useState("X")
@@ -86,7 +79,6 @@ const Game= () => {
                     setResult({winner: opponent, state: "over"})
                 }
                 setLoading(false)
-                // console.log(game)
             }
         })
     }, [games])
@@ -110,8 +102,6 @@ const Game= () => {
                 const newChannel= await client.channel("messaging", {
                     members: [client.userID, res.users[0].id]
                 })
-
-                // console.log(res.users[0])
         
                 await newChannel.watch()
                 setChannel(newChannel)
@@ -125,9 +115,7 @@ const Game= () => {
     
 
     const chooseSquare = async (sq) => {
-        // console.log(turn)
         try {
-            console.log(result.status)
             if ( result.winner=="none" && turn===player && board[sq]==="" ) {
                 setTurn(player==="X" ? "O" : "X")
                 
@@ -148,25 +136,13 @@ const Game= () => {
                     }
                 })))
 
-
                 updateGame({id: currGame?._id, 
                     values: {
                         progress: board,
                         turn: turn,
                         updated: new Date().toString()                    }
                 })
-
-
-
-                // console.log(currGame)
-                
-
-                // console.log(turn, board)
-
             }
-            
-            // window.location.reload(false)
-            // console.log(sq)
         }
         catch(err) {
 
@@ -175,7 +151,6 @@ const Game= () => {
 
     useEffect(() => {
         if (currGame) {
-            // console.log(board)
             updateGame({id: currGame?._id, 
                 values: {
                     progress: board,
@@ -189,7 +164,6 @@ const Game= () => {
             else if (turn!==player) {
                 setHeaderText("Their move")
             }
-
             checkWin()
             checkTie()
         }
@@ -197,29 +171,27 @@ const Game= () => {
 
     
 
-    // console.log(client)
-    channel?.on((event)=> {
-        // console.log(event.user)
-        if (event.type=="game-move" && event.user.id !== client.userID) {
-            const currPlayer= event.data.player === "X" ? "O" : "X"
-            setPlayer(currPlayer)
-            setTurn(currPlayer)
-            setBoard(board.map((val, idx) => {
-                if (idx===event.data.sq && val==="") {
-                    return event.data.player
-                }
-                else {
-                    return val
-                }
-            }))
-            // window.location.reload(false)
-        }
-    })
+    if (channel) {
+        channel?.on((event)=> {
+            if (event.type=="game-move" && event.user.id !== client.userID) {
+                const currPlayer= event.data.player === "X" ? "O" : "X"
+                setPlayer(currPlayer)
+                setTurn(currPlayer)
+                setBoard(board.map((val, idx) => {
+                    if (idx===event.data.sq && val==="") {
+                        return event.data.player
+                    }
+                    else {
+                        return val
+                    }
+                }))
+            }
+        })
+    }
 
 
     
 
-    // console.log(result.winner)
 
     const checkWin = () => {
         Patterns.forEach((pattern) => {
@@ -261,29 +233,11 @@ const Game= () => {
                     updateGame({id: currGame?._id, values: {
                         status: opponent,
                         updated: new Date().toString()
-
                     }})
                 }
-
-                // if (currGame?.status==username) {
-                //     setHeaderText("You win")
-                // }
-                // else if (currGame?.status=='draw') {
-                //     setHeaderText("It's a draw")
-                // }
-                // else {
-                //     setHeaderText("They won")
-                // }
-
-
-                // alert("Winner", board[pattern[0]])
-                // console.log("won")
             }
-
         })
     }
-
-    
 
     const checkTie = () => {
         let filled = true
@@ -299,13 +253,11 @@ const Game= () => {
                 status: "draw",
                 updated: new Date().toString()            
             }})
-            // alert("Draw")
         }
     }
 
     
     useEffect(() => {
-
         if (result.winner==="none") {
             if (turn === player) {
                 setHeaderText("Your move")
@@ -323,48 +275,7 @@ const Game= () => {
         else {
             setHeaderText("They won")
         }
-
-
-        // if (result.winner==="X") {
-        //     updateGame({id: currGame?._id, values: {
-        //         status: p1,
-        //     }})
-        // }
-        // else if (result.winner==="O") {
-        //     updateGame({id: currGame?._id, values: {
-        //         status: p2,
-        //     }})
-        // }
-        // else if (result.winner==="draw") {
-        //     updateGame({id: currGame?._id, values: {
-        //         status: "draw",
-        //     }})
-        // }
     }, [result])
-
-    // useEffect(() => {
-    //     if (currGame) {
-    //         if (currGame?.status==="live") {
-    //             if (turn == player) {
-    //                 setHeaderText("Your move")
-    //             }
-    //             else {
-    //                 setHeaderText("Their move")
-    //             }
-    //         }
-    //         else if (currGame?.status==username) {
-    //             setHeaderText("You win")
-    //         }
-    //         else if (currGame?.status=='draw') {
-    //             setHeaderText("It's a draw")
-    //         }
-    //         else {
-    //             setHeaderText("They won")
-    //         }
-    //     }
-
-    // }, [currGame])
-
 
 
     return (
