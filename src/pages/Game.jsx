@@ -9,7 +9,7 @@ import { getAllGames, updateGame } from '../redux/apiCalls';
 import { Patterns } from '../data/WinningPatterns';
 
 
-function Game() {
+const Game= () => {
 
     const location= useLocation()
     const opponent= location.pathname.split("/")[2]
@@ -124,8 +124,8 @@ function Game() {
     const chooseSquare = async (sq) => {
         // console.log(turn)
         try {
-            console.log(result?.status)
-            if ( result?.winner=="none" && turn===player && board[sq]==="" ) {
+            console.log(result.status)
+            if ( result.winner=="none" && turn===player && board[sq]==="" ) {
                 setTurn(player==="X" ? "O" : "X")
                 
                 await channel.sendEvent({
@@ -137,11 +137,7 @@ function Game() {
                 })
 
                 setBoard((board.map((val, idx) => {
-                    // console.log(sq)
-                    // console.log(board[idx], idx)
-                    // console.log(board)
                     if (idx===sq && val==="") {
-                        // console.log(idx)
                         return player
                     }
                     else {
@@ -149,7 +145,6 @@ function Game() {
                     }
                 })))
 
-                // console.log(board)
 
                 updateGame({id: currGame?._id, 
                     values: {

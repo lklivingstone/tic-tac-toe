@@ -43,26 +43,83 @@ function GameCard({ game }) {
     let currStatus= ""
 
     if (game.status==="live") {
-        if (myturn) {
-            currStatus= `${other} just made their move!
-            It's your turn to play now`
+        // console.log(game.progress)
+        if (game.progress[0]==='' &&
+        game.progress[1]==='' && 
+        game.progress[2]==='' && 
+        game.progress[3]==='' && 
+        game.progress[4]==='' && 
+        game.progress[5]==='' && 
+        game.progress[6]==='' && 
+        game.progress[7]==='' && 
+        game.progress[8]==='') {
+            if (username===p1) {
+                // console.log(1)
+                currStatus= 'You need to make a move!'
+            }
+            else {
+                // console.log(3)
+                currStatus= 'They need to make a move!'
+            }
         }
-        else {
-            currStatus= `You've made your move!
-            Waiting for them.`
+        else if (username === p1) {
+            // console.log(2)
+
+            if (game.turn === "X") {
+                currStatus= `${other} just made their move!
+                It's your turn to play now`
+            }
+            else {
+                currStatus= `You've made your move!
+                Waiting for them.`
+            }
         }
+
+        else if (username ===p2) {
+            if (game.turn ==="X") {
+                currStatus= `You've made your move!
+                Waiting for them.`
+            }
+            else {
+                currStatus= `${other} just made their move!
+                It's your turn to play now`
+            }
+        }
+
+        
     }
+    else if (game.status===username) {
+        currStatus= "You won!"
+    }
+
+    else if (game.status===other) {
+        currStatus= "They won!"
+    }
+    
     else {
-        if (game.status===username) {
-            currStatus= `You won!`
-        }
-        else if (game.status==="draw") {
-            currStatus= "It's a Draw!"
-        }
-        else {
-            currStatus= "They won"
-        }
+        currStatus= "Its a Draw!"
     }
+
+    //     if (myturn) {
+    //         currStatus= `${other} just made their move!
+    //         It's your turn to play now`
+    //     }
+    //     else {
+    //         currStatus= `You've made your move!
+    //         Waiting for them.`
+    //     }
+    // }
+    // else {
+    //     if (game.status===username) {
+    //         currStatus= `You won!`
+    //     }
+    //     else if (game.status==="draw") {
+    //         currStatus= "It's a Draw!"
+    //     }
+    //     else {
+    //         currStatus= "They won"
+    //     }
+    // }
 
     const time= game.updated
     const month= time.split(" ")[1]
