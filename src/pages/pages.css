@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+  }
+  
+  .App {
+    height: 100vh;
+    /* max-width: 500px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+  
+  }
+  
+  .header {
+    font-family: 'Homemade Apple', cursive;
+  }
+  
+  .title {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+  }
+  
+  .buttons {
+    flex: 1;
+    display: flex;
+    width: 100vw;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    width: 90%;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    outline: none;
+    }
+  
+  .back-btn {
+    position: fixed;
+    left: 15px;
+    top: 15px;
+  }
+  
+  .register-card {
+    padding-top: 50px;
+    flex: 3;
+    display: flex;
+    justify-content: flex-start;
+    align-items: left;
+    flex-direction: column;
+    width: 90vw;
+  }
+  
+  input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    border: none;
+    height: 45px;
+    border-radius: 5px;
+    background-color: rgb(225, 225, 225);
+    color: black;
+  }
+  
+  .x {
+    font-family: 'Fredoka One', cursive;
+    font-weight: 800;
+    color:rgba(37, 92, 230, 0.859);
+    margin-bottom: 10px;
+  }
+  
+  .o {
+    font-family: 'Fredoka One', cursive;
+    font-weight: 800;
+    color:rgba(230, 37, 37, 0.859);
+    margin-bottom: 10px;
+  }
+  
+  .container {
+    width: 90vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* .play-area {
+    display: grid;
+    width: 90vw;
+    height: 100%;
+    grid-template-columns: auto auto auto;
+  } */
+  
+  .game-header {
+    height: 40px;
+    width: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 219, 91);
+    font-weight: 300;
+  }
+  
+  /* .block {
+    display: flex;
+    font-family: 'Fredoka One', cursive;
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    height: 100px; 
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0px; 
+    border: 3px solid rgb(255, 219, 91);
+  } */
+  
+  #block_0 {
+    border-top: none;
+    border-left: none;
+  }
+  
+  #block_1 {
+    border-top: none;
+  }
+  #block_2 {
+    border-top: none;
+    border-right: none;
+  
+  }
+  #block_3 {
+    border-left: none;
+  
+  }
+  #block_5 {
+    border-right: none;
+  
+  }
+  #block_6 {
+    border-bottom: none;
+    border-left: none;
+  
+  }
+  #block_7 {
+    border-bottom: none;
+  }
+  #block_8 {
+    border-bottom: none;
+    border-right: none;
+  }
+  
+  .board {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    height: 100%;
+  }
+  
+  .column {
+    display: flex;
+    flex: 1;
+  }
+  
+  .block {
+    display: flex;
+    flex: 1;
+    font-family: 'Fredoka One', cursive;
+    padding: 0;
+    margin: 0;
+    /* width: 100px;
+    height: 100px; */
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    /* margin: 0px; */
+    border: 3px solid rgb(255, 219, 91);
+  }
+  
+  
+  .card-container {
+    padding-top: 100px;
+  }
