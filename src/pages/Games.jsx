@@ -6,6 +6,8 @@ import { getGames } from '../redux/apiCalls';
 import { Paper } from '@mui/material';
 import GameCard from './GameCard';
 import { useChatContext } from 'stream-chat-react';
+import { useDispatch } from "react-redux";
+import { logOut } from "../redux/userRedux";
 
 function Games() {
     const { client }= useChatContext()
@@ -41,10 +43,22 @@ function Games() {
         gamesfunc()
     },[])
 
+    // const { client }= useChatContext()
+    const dispatch= useDispatch()
+
+    // const navigate= useNavigate()
+
+    const handleLogout = (e) => {
+        dispatch(logOut())
+        client.disconnectUser()
+        navigate("/")
+
+    }
 
 
     return (
         <div className="App">
+            <button className="btn" style={{position: "fixed", top: 0, right: 0, backgroundColor: "#E8C602", fontWeight: "550", width: "30%", height: "30px" }} onClick={handleLogout}>Logout</button>
             <div style={
                 {
                     width: "90vw",

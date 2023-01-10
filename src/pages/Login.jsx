@@ -68,7 +68,13 @@ function Login() {
         </div>
         <div className="buttons">
             { error && <button className="btn" style={{backgroundColor: "red", height: "70px", fontWeight: "400"}}>Enter correct details.</button>}
-            <button className="btn" style={{backgroundColor: "#E8C602", fontWeight: "550"}} onClick={handleClick} disabled={isFetching} >Login</button>
+            { !isFetching &&
+                <button className="btn" style={{backgroundColor: "#E8C602", fontWeight: "550"}} onClick={handleClick} disabled={isFetching} >Login</button>
+            }
+            { isFetching &&
+                <button className="btn" style={{backgroundColor: "#E8C602", fontWeight: "550"}} disabled={isFetching} >Loading...</button>
+
+            }
         </div>
         </div>
     );

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getAllGames, updateGame } from '../redux/apiCalls';
 import { Patterns } from '../data/WinningPatterns';
+import Spin from "../animation/Spin"
 
 
 const Game= () => {
@@ -31,6 +32,7 @@ const Game= () => {
 
     const [headerText, setHeaderText]= useState("Your move")
 
+    const [ loading, setLoading ]= useState(true)
 
     // useEffect(() => {
     //     checkWin()
@@ -83,6 +85,7 @@ const Game= () => {
                 else {
                     setResult({winner: opponent, state: "over"})
                 }
+                setLoading(false)
                 // console.log(game)
             }
         })
@@ -366,6 +369,9 @@ const Game= () => {
 
     return (
         <div className="App">
+            { loading && <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw"}}>
+                <Spin />
+            </div>}
             <div className="back-btn" onClick={() => {navigate(-1)}}>
                 <ArrowBackIosIcon />
             </div>
@@ -434,7 +440,7 @@ const Game= () => {
                 </div>
             </div>
             <div className="buttons">
-                <button className="btn" style={{backgroundColor: "#E8C602", fontWeight: "550"}}>Start game</button>
+                {/* <button className="btn" style={{backgroundColor: "#E8C602", fontWeight: "550"}}>Submit</button> */}
             </div>
         </div>
     );

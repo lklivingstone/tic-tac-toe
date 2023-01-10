@@ -50,9 +50,12 @@ function StartGame() {
 
             const start= ["", "", "", "", "", "", "", "", ""]
 
-            startGame({ player1: username, player2: opponent, status: "live", progress: start, turn: "X" })
+            startGame({ player1: username, player2: opponent, status: "live", progress: start, turn: "X" }).then((res)=>{
+                navigate(`/game/${opponent}`)
+            }).catch((err)=> {
+                alert("Invalid")
+            })
 
-            navigate(`/game/${opponent}`)
         } catch(err) {
             alert("Invalid user")
             return
