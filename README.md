@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# **tic-tac-toe**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An asynchronous multi-player Tic Tac Toe game.
 
-## Available Scripts
 
-In the project directory, you can run:
+stile is built with Node.js, Mongoose, and the client is built with React. Help from YouTube videos were taken to learn and implement the technology.
 
-### `npm start`
+## Table of content
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* [Why](#why)
+* [Project Description](#project-description)
+* [Links](#links)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Why
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Being interested in Web Development, I wanted my first project to be a Full Stack E Commerce Website, since it implements technologies ranging from frontend, backend and database management.
 
-### `npm run build`
+For this project, I used the MERN stack. The reason for me to choose this stack is its ease to learn and the trend in the market.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+I used many YouTube videos to learn the technologies, including many blogposts.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Description
 
-### `npm run eject`
+The completion of this website required many technologies to be implemented. Many technologies might seem redundant, but the aim of this project was to simply learn the technology and implement them.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The following are the technologies used and a short reason for me to choose them:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* React: React has a fast learning curve, allows reusable components, fast render with Virtual DOM, flux and Redux, and many more
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* NodeJS: Node.js is a platform built on Chrome's JavaScript runtime for easily building fast and scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* Express: Express was created to make APIs and web applications with ease, it saves a lot of coding  it is written in javascript as javascript is an easy language even if you are not efficient with it.
 
-## Learn More
+* Mongoose: It has a schema to work against in our application code and an explicit relationship between our MongoDB documents and the Mongoose models within our application.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* Material UI: Material UI has pre-designed UI components which we can easily attach to your application and it has clearly understandable and well-structured documentation, which includes guides with code examples to practice with.
+ 
+* Redux: Redux allows us to manage your app's state in a single place and keep changes in your app more predictable and traceable. It makes it easier to reason about changes occurring in your app.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Axios:Axios is a Javascript library used to make HTTP requests from node. js or XMLHttpRequests from the browser and it supports the Promise API that is native to JS ES6. It can be used intercept HTTP requests and responses and enables client-side protection against XSRF. It also has the ability to cancel requests.
 
-### Code Splitting
+* Stripe: Stripe provides a set of programmable APIs and tools to let you facilitate payments and pay out sellers globally. From verifying your sellers' identities to routing payments, Stripe makes it easy for platforms and marketplaces to manage their payments while staying compliant.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+* Styled Components: It allows to write CSS inside the components, it supports theming out of the box and they are easy to learn and code.
 
-### Analyzing the Bundle Size
+* Swiper: It is a touch slider with hardware accelerated transitions. It is used to code the slider component in the website.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+* CryptoJS: It is used to store encrypted data in an environment variable or decrypt the data and use as plaintext data.
 
-### Making a Progressive Web App
+* JSONWebToken: JWT is used for AUTHORIZATION, not AUTHENTICATION. JWTs are a good way of securely transmitting information between parties because they can be signed, which means you can be sure that the senders are who they say they are. Instead of storing information on the server after authentication, JWT creates a JSON web token and encodes, sterilizes, and adds a signature with a secret key that cannot be tampered with. This key is then sent back to the browser. Each time a request is sent, it verifies and sends the response back. The main difference here is that the user’s state is not stored on the server, as the state is instead stored inside the token on the client-side. JWT also allows us to use the same JSON Web Token in multiple servers that you can run without running into problems where one server has a certain session, and the other server doesn’t.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+* Nodemon: nodemon is a tool that helps develop Node. js based applications by automatically restarting the node application when file changes in the directory are detected. nodemon does not require any additional changes to your code or method of development.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+I learnt the above mentioned technologies to build the website.
 
-### Deployment
+#### For Deployment, 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+* The API was deployed in Render.
+* The Database was uploaded in MongoDB Atlas Cluster.
+* The Frontend was deployed in Netlify
 
-### `npm run build` fails to minify
+## Links
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Link to the website: [https://stile.netlify.app/)
+
