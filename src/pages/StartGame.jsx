@@ -1,10 +1,10 @@
 import './pages.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useChatContext } from 'stream-chat-react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAllGames, startGame } from '../redux/apiCalls';
+import { getAllGames, getGames, getUsers, startGame } from '../redux/apiCalls';
 
 
 function StartGame() {
@@ -21,40 +21,75 @@ function StartGame() {
 
     const { client }= useChatContext()
 
+    const [ users, setUsers ]= useState([])
+    const [ games, setGames ]= useState([])
+
+    useEffect(()=> {
+        const gamesfunc= async () => {
+            try {
+                const foundGames= await getGames(username)
+                setGames(foundGames)
+                const foundUsers= await getUsers()
+                setUsers(foundUsers)
+                // console.log(sortGames)
+
+            } catch (err) {
+
+            }
+        }
+        gamesfunc()
+    }, [])
 
     const createChannel = async (e) => {
         try {
-        
-            const res= await client.queryUsers({
-                name: {
-                    $eq: opponent
+
+            let userPresent= false
+
+            users.map((single)=> {
+                if (single.username===opponent) {
+                    userPresent= true
                 }
             })
 
-            if (res.users.length === 0) {
+            let gamePresent= false
+
+            games.map((single) => {
+                if ((single.player1===username && single.player2===opponent) || single.player2===username && single.player1===opponent) {
+                    gamePresent= true
+                }
+            })
+
+            if (gamePresent===false && userPresent) {
+                const res= await client.queryUsers({
+                    name: {
+                        $eq: opponent
+                    }
+                })
+    
+                if (res.users.length === 0) {
+                    alert("User not found")
+                    return
+                }
+    
+    
+                e.preventDefault()
+    
+                const start= ["", "", "", "", "", "", "", "", ""]
+    
+    
+                
+    
+                startGame({ player1: username, player2: opponent, status: "live", progress: start, turn: "X" }).then((res)=>{
+                    navigate(`/game/${opponent}`)
+                }).catch((err)=> {
+                    alert("Invalid")
+                })
+            }
+            else {
                 alert("User not found")
                 return
             }
 
-            // const foundGames= getAllGames()
-            // foundGames.map((game)=> {
-            //     if ( (game.player1===user.username && game.player2===opponent) || (game.player2===user.username && game.player1===opponent) ) { 
-            //         if (game.status==="live") {
-            //             alert("Game already exists!")
-            //             return
-            //         }
-            //     }
-            // })
-
-            e.preventDefault()
-
-            const start= ["", "", "", "", "", "", "", "", ""]
-
-            startGame({ player1: username, player2: opponent, status: "live", progress: start, turn: "X" }).then((res)=>{
-                navigate(`/game/${opponent}`)
-            }).catch((err)=> {
-                alert("Invalid")
-            })
 
         } catch(err) {
             alert("Invalid user")
@@ -69,6 +104,11 @@ function StartGame() {
         // setChannel(newChannel)
     }
 
+    const handleSubmit= () => {
+        
+        
+    }
+
     return (
         <>{
             channel? (
@@ -81,8 +121,8 @@ function StartGame() {
         <div className="register-card">
             <span>Start a new game</span>
             <h1 style={{ marginTop: "5px", marginBottom: "25px"}}>Whom do you want to play with</h1>
-            <label style={{fontWeight: "600"}}>Email</label>
-            <input type="text" name="email" placeholder="Type their email here" onChange={(e)=> {
+            <label style={{fontWeight: "600"}}>Username</label>
+            <input type="text" name="email" placeholder="Type their username here" onChange={(e)=> {
                 setOpponent(e.target.value)
             }} required />
         </div>

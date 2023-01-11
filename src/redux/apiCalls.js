@@ -91,3 +91,12 @@ export const deleteGame = async (data) => {
         
     }
 }
+
+export const getUsers = async () => {
+    try {
+        const res = await publicRequest.get("/auth/users")
+        return res.data
+    } catch(err) {
+
+    }
+}
