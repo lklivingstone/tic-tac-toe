@@ -403,7 +403,7 @@ const Game= () => {
                 </div>
             </div>
             <div className="buttons">
-            <span style={{marginTop: "5px", marginBottom: "25px", fontWeight: "100"}} >Refresh if unable to play move</span>
+            <span style={{marginTop: "5px", marginBottom: "25px", fontWeight: "100"}} >Refresh if unable to play move or reopen the game</span>
 
                 {/* <button className="btn" style={{backgroundColor: "#E8C602", fontWeight: "550"}}>Submit</button> */}
             </div>
