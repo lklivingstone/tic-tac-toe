@@ -52,7 +52,7 @@ const Game= () => {
 
     const [ currGame, setCurrGame ]= useState()
 
-    const [ result, setResult ]= useState({winner: "none", state: "none"})
+    const [ result, setResult ]= useState({winner: "live", state: "live"})
 
 
     useEffect(()=> {
@@ -67,7 +67,7 @@ const Game= () => {
                     setPlayer("O")
                 }
                 if (game.status==="live") {
-                    setResult({winner: "none", state: "none"})
+                    setResult({winner: "live", state: "live"})
                 }
                 else if (game.status==="draw") {
                     setResult({winner: "draw", state: "draw"})
@@ -116,7 +116,7 @@ const Game= () => {
 
     const chooseSquare = async (sq) => {
         try {
-            if ( result.winner=="none" && turn===player && board[sq]==="" ) {
+            if ( result.winner=="live" && turn===player && board[sq]==="" ) {
                 setTurn(player==="X" ? "O" : "X")
                 
                 await channel.sendEvent({
@@ -258,7 +258,7 @@ const Game= () => {
 
     
     useEffect(() => {
-        if (result.winner==="none") {
+        if (result.winner==="live") {
             if (turn === player) {
                 setHeaderText("Your move")
             }
@@ -403,6 +403,8 @@ const Game= () => {
                 </div>
             </div>
             <div className="buttons">
+            <span style={{marginTop: "5px", marginBottom: "25px", fontWeight: "100"}} >Refresh if unable to play move</span>
+
                 {/* <button className="btn" style={{backgroundColor: "#E8C602", fontWeight: "550"}}>Submit</button> */}
             </div>
         </div>

@@ -106,7 +106,7 @@ function Games() {
                     ))  
                 }
             </div>
-            <h1>old</h1>
+            {/* <h1>old</h1> */}
             <div className="">
                 {   
                     oldGames.length ===0 ? (
