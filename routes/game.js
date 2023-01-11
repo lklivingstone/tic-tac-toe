@@ -101,6 +101,14 @@ router.get("/old/:username", async (req, res) => {
 
         const foundGames= await OldGame.find().sort({ updatedAt: "desc"})
 
+        const username= req.params.username
+        const filteredGames= foundGames.filter(game=> {
+            if (game.player1===username || game.player2===username) {
+                return true
+            }
+        })
+
+        // console.log(req.params.username)
 
         // const username= req.params.username
         // const filteredGames= foundGames.map(game=> {
@@ -109,7 +117,7 @@ router.get("/old/:username", async (req, res) => {
         //     }
         // })
 
-        res.status(200).json(foundGames)
+        res.status(200).json(filteredGames)
 
     } catch(err) {
         res.status(500).json(err)
