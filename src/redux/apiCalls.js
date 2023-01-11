@@ -30,14 +30,13 @@ export const getGames = async (username) => {
     }
 }
 
-export const getGame = async ({data}) => {
-    try{
-        const res= await publicRequest.post("/findgame", data)
-        return res.data
-    }catch(err) {
-        
-    }
-}
+// export const getGame = async ({data}) => {
+//     try{
+//         const res= await publicRequest.post("/findgame", data)
+//         return res.data
+//     }catch(err) {
+//     }
+// }
 
 export const startGame = async (data) => {
     try {
@@ -60,6 +59,33 @@ export const getAllGames = async (data) => {
 export const updateGame = async (data) => {
     try {
         const res= await publicRequest.put(`/game/${data.id}`, data.values)
+        // console.log(data.values)
+    } catch(err) {
+        
+    }
+}
+
+export const postOldGame = async (data) => {
+    try {
+        const res= await publicRequest.post("/game/old", data)
+        return res
+    } catch(err) {
+
+    }
+}
+
+export const getOldGames = async (username) => {
+    try {
+        const res = await publicRequest.get(`/game/old/${username}`)
+        return res.data
+    } catch(err) {
+
+    }
+}
+
+export const deleteGame = async (data) => {
+    try {
+        const res= await publicRequest.delete(`/game/${data}`)
         // console.log(data.values)
     } catch(err) {
         

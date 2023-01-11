@@ -5,14 +5,14 @@ import { useLocation } from 'react-router-dom';
 import { useChatContext } from 'stream-chat-react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAllGames, updateGame } from '../redux/apiCalls';
+import { getAllGames, postOldGame, updateGame } from '../redux/apiCalls';
 import { Patterns } from '../data/WinningPatterns';
 import Spin from "../animation/Spin"
 
 
 const Game= () => {
-    const location= useLocation()
 
+    const location= useLocation()
     const opponent= location.pathname.split("/")[2]
 
     const navigate= useNavigate()
@@ -34,14 +34,10 @@ const Game= () => {
 
     const [ loading, setLoading ]= useState(true)
 
-    
-
     useEffect(() => {
         const gamesfunc= async () => {
             try {
-
                 const foundGames= await getAllGames()
-
                 setGames(foundGames)
             } catch (err) {
 
@@ -51,13 +47,17 @@ const Game= () => {
     }, [])
 
     const [player, setPlayer ]= useState("X")
+
     const [turn, setTurn ]= useState("X")
+
     const [ currGame, setCurrGame ]= useState()
-    const [ result, setResult ]= useState("live")
+
+    const [ result, setResult ]= useState({winner: "none", state: "none"})
+
 
     useEffect(()=> {
         games.map(game=> {
-            if ( (game.player1===user.username && game.player2===opponent && game.status==="live") || (game.player2===user.username && game.player1===opponent && game.status==="live") ) {
+            if ( (game.player1===user.username && game.player2===opponent) || (game.player2===user.username && game.player1===opponent) ) {
                 setCurrGame(game)
                 setBoard(game.progress)
                 setTurn(game.turn)
@@ -67,23 +67,23 @@ const Game= () => {
                     setPlayer("O")
                 }
                 if (game.status==="live") {
-                    setResult("live")
+                    setResult({winner: "none", state: "none"})
                 }
                 else if (game.status==="draw") {
-                    setResult("draw")
+                    setResult({winner: "draw", state: "draw"})
                 }
                 else if (game.status===username) {
-                    setResult(username)
+                    setResult({winner: username, state: "over"})
                 }
                 else {
-                    setResult(opponent)
+                    setResult({winner: opponent, state: "over"})
                 }
                 setLoading(false)
             }
         })
     }, [games])
 
-
+    // const newChannel=null
     useEffect(() => {
         const createChannel = async () => {
             try{
@@ -92,19 +92,19 @@ const Game= () => {
                         $eq: opponent
                     }
                 })
-                
+        
                 if (res.users.length === 0) {
                     alert("User not found")
                     return
                 }
         
-        
                 const newChannel= await client.channel("messaging", {
                     members: [client.userID, res.users[0].id]
                 })
-        
+                
                 await newChannel.watch()
                 setChannel(newChannel)
+                // await channel.update({disabled: true})
             } catch(err) {
 
             }
@@ -116,7 +116,7 @@ const Game= () => {
 
     const chooseSquare = async (sq) => {
         try {
-            if ( result=="live" && turn===player && board[sq]==="" ) {
+            if ( result.winner=="none" && turn===player && board[sq]==="" ) {
                 setTurn(player==="X" ? "O" : "X")
                 
                 await channel.sendEvent({
@@ -140,9 +140,7 @@ const Game= () => {
                     values: {
                         progress: board,
                         turn: turn,
-                        status: result,
-                        updated: new Date().toString()                    
-                    }
+                        updated: new Date().toString()                    }
                 })
             }
         }
@@ -157,7 +155,6 @@ const Game= () => {
                 values: {
                     progress: board,
                     turn: turn,
-                    status: result,
                     updated: new Date().toString()
                 }
             })
@@ -214,24 +211,30 @@ const Game= () => {
 
             if (foundWinningPattern) {
                 if (board[pattern[0]]==="X" && player==="X") {
-                    setResult(username)
+                    setResult({ winner: username, state: "over"})
                 } 
                 else if (board[pattern[0]]==="X" && player==="O") {
-                    setResult(opponent)
+                    setResult({ winner: opponent, state: "over"})
                 } 
                 else if (board[pattern[0]]==="O" && player==="O") {
-                    setResult(username)
+                    setResult({ winner: username, state: "over"})
                 } 
                 else {
-                    setResult(opponent)
+                    setResult({ winner: opponent, state: "over"})
                 } 
 
-                updateGame({id: currGame?._id, values: {
-                    progress: board,
-                    turn: turn,
-                    status: result,
-                    updated: new Date().toString()
-                }})
+                if (result.winner===username) {
+                    updateGame({id: currGame?._id, values: {
+                        status: username,
+                        updated: new Date().toString()
+                    }})
+                }
+                else if (result.winner===opponent) {
+                    updateGame({id: currGame?._id, values: {
+                        status: opponent,
+                        updated: new Date().toString()
+                    }})
+                }
             }
         })
     }
@@ -245,12 +248,9 @@ const Game= () => {
         })
 
         if (filled) {
-            console.log("draw")
-            setResult("draw")
+            setResult({winner: "draw", status: "draw"})
             updateGame({id: currGame?._id, values: {
-                progress: board,
-                turn: turn,
-                status: result,
+                status: "draw",
                 updated: new Date().toString()            
             }})
         }
@@ -258,7 +258,7 @@ const Game= () => {
 
     
     useEffect(() => {
-        if (result==="live") {
+        if (result.winner==="none") {
             if (turn === player) {
                 setHeaderText("Your move")
             }
@@ -266,16 +266,27 @@ const Game= () => {
                 setHeaderText("Their move")
             }
         }
-        else if (result===username) {
+        else if (result.winner===username) {
             setHeaderText("You win")
         }
-        else if (result==='draw') {
+        else if (result.winner==='draw') {
             setHeaderText("It's a draw")
         }
         else {
             setHeaderText("They won")
         }
     }, [result])
+
+    const handleBack= async () => {
+        try {
+            // const destroy= await channel?.delete()
+            // await channel.update({disabled: true})
+            navigate(-1)
+        }
+        catch(err) {
+
+        }
+    }
 
     useEffect(()=> {
         if (headerText==="You win") {
@@ -285,7 +296,16 @@ const Game= () => {
                 status: username,
                 updated: new Date().toString()            
             }})
-            window.location.reload(false)
+            postOldGame({
+                player1: currGame.player1,
+                player2: currGame.player2,
+                status: username,
+                progress: board,
+                turn: turn,
+                updated: new Date().toString(),
+                gameid: currGame._id
+            })
+            // window.location.reload(false)
         }
         else if (headerText==="They won") {
             updateGame({id: currGame?._id, values: {
@@ -294,7 +314,8 @@ const Game= () => {
                 status: opponent,
                 updated: new Date().toString()            
             }})
-            window.location.reload(false)
+            
+            // window.location.reload(false)
         }
         else if (headerText==="It's a draw") {
             updateGame({id: currGame?._id, values: {
@@ -302,9 +323,21 @@ const Game= () => {
                 turn: turn,
                 status: "draw",
                 updated: new Date().toString()            
-            }})            
-            window.location.reload(false)
+            }})          
+            if (currGame.player1===username) {
+                postOldGame({
+                    player1: currGame.player1,
+                    player2: currGame.player2,
+                    status: "draw",
+                    progress: board,
+                    turn: turn,
+                    updated: new Date().toString(),
+                    gameid: currGame._id
+                })
+            }  
+            // window.location.reload(false)
         }
+        
     }, [headerText])
 
 
@@ -313,7 +346,7 @@ const Game= () => {
             { loading && <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw"}}>
                 <Spin />
             </div>}
-            <div className="back-btn" onClick={() => {navigate(-1)}}>
+            <div className="back-btn" onClick={handleBack}>
                 <ArrowBackIosIcon />
             </div>
             <div className="register-card">
@@ -367,17 +400,6 @@ const Game= () => {
                             }}>{board[8]}</div>
                         </div>
                     </div>
-                    {/* <div className="play-area">
-                        <div id="block_0" className="block">{board[0]}</div>
-                        <div id="block_1" className="block">{board[1]}</div>
-                        <div id="block_2" className="block">{board[2]}</div>
-                        <div id="block_3" className="block">{board[3]}</div>
-                        <div id="block_4" className="block">{board[4]}</div>
-                        <div id="block_5" className="block">{board[5]}</div>
-                        <div id="block_6" className="block">{board[6]}</div>
-                        <div id="block_7" className="block">{board[7]}</div>
-                        <div id="block_8" className="block">{board[8]}</div>
-                    </div> */}
                 </div>
             </div>
             <div className="buttons">
