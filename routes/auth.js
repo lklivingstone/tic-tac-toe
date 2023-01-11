@@ -62,4 +62,14 @@ router.post("/login", async (req, res) => {
     }
 })
 
+router.get("/users", async (req, res) => {
+    try {
+        const foundUsers= await User.find()
+
+        res.status(200).json(foundUsers)
+    }
+    catch(err) {
+        
+    }
+})
 module.exports= router
