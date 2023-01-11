@@ -58,7 +58,7 @@ function Games() {
 
     return (
         <div className="App">
-            <button className="btn" style={{position: "fixed", top: 0, right: 0, backgroundColor: "#E8C602", fontWeight: "550", width: "30%", height: "30px" }} onClick={handleLogout}>Logout</button>
+            <button className="btn" style={{position: "fixed", top: 0, right: 0, color:"grey", backgroundColor: "transparent", fontWeight: "550", width: "30%", height: "30px" }} onClick={handleLogout}>Logout</button>
             <div style={
                 {
                     width: "90vw",

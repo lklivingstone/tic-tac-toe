@@ -24,6 +24,11 @@ function StartGame() {
 
     const createChannel = async (e) => {
         try {
+
+            if (opponent===username) {
+                alert("Invalid")
+                return
+            }
         
             const res= await client.queryUsers({
                 name: {
@@ -50,11 +55,17 @@ function StartGame() {
 
             const start= ["", "", "", "", "", "", "", "", ""]
 
-            startGame({ player1: username, player2: opponent, status: "live", progress: start, turn: "X" }).then((res)=>{
+            const result= await startGame({ player1: username, player2: opponent, status: "live", progress: start, turn: "X" })
+            if (!result) {
+                alert("Live game in process")
+                return
+            }else {
+                // console.log(result)
                 navigate(`/game/${opponent}`)
-            }).catch((err)=> {
-                alert("Invalid")
-            })
+            }
+            console.log(result)
+
+           
 
         } catch(err) {
             alert("Invalid user")
@@ -81,7 +92,7 @@ function StartGame() {
         <div className="register-card">
             <span>Start a new game</span>
             <h1 style={{ marginTop: "5px", marginBottom: "25px"}}>Whom do you want to play with</h1>
-            <label style={{fontWeight: "600"}}>Email</label>
+            <label style={{fontWeight: "600"}}>Username</label>
             <input type="text" name="email" placeholder="Type their email here" onChange={(e)=> {
                 setOpponent(e.target.value)
             }} required />

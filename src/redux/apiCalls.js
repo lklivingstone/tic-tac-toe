@@ -41,7 +41,8 @@ export const getGame = async ({data}) => {
 
 export const startGame = async (data) => {
     try {
-        await publicRequest.post("/game", data)
+        const res= await publicRequest.post("/game", data)
+        return res
     } catch(err) {
 
     }

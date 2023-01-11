@@ -126,6 +126,23 @@ function GameCard({ game }) {
     const day= time.split(" ")[2]
     const year= time.split(" ")[3]
     const timing= time.split(" ")[4]
+    const hh= timing.split(":")[0]
+    const mm= timing.split(":")[1]
+
+    let hour=12
+    let min=""
+
+    if (hh>="12") {
+        min= ":"+mm+"pm"
+    }
+    else {
+        min= ":"+mm+"am"
+    }
+    // if (hh>12) {
+        
+    // }
+    const hhnum= parseInt(hh, 10)
+    hour= hhnum%12
 
 
     const handleClick = (e) => {
@@ -156,7 +173,7 @@ function GameCard({ game }) {
                 </span>
             </div>
             <div style={{display: "flex", justifyContent: "left", height: "15%"}} >
-                <span>{day} {month} {year} {timing}</span>
+                <span>{day} {month} {year} {hour}{min}</span>
             </div>
             <div style={{display: "flex", justifyContent: "center", height: "20%"}} >
                 <button className="btn" style={{ width: "100%", backgroundColor: "#E8C602", fontWeight: "550"}} onClick={handleClick} >{ game.status==="live" ? "Play!" : "View game" }</button>
