@@ -85,6 +85,7 @@ function Games() {
                     justifyContent: "flex-start"
                 }}>
                 <h1 style={{ marginTop: "5px", marginBottom: "25px"}}>Your Games</h1>
+                <span style={{marginTop: "5px", marginBottom: "25px", fontWeight: "100"}} >Refresh once after loggin in</span>
             </div>
             <div className="">
                 {
