@@ -108,6 +108,8 @@ router.get("/old/:username", async (req, res) => {
             }
         })
 
+        console.log(foundGames)
+
         // console.log(req.params.username)
 
         // const username= req.params.username
